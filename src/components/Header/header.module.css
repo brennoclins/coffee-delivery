@@ -1,0 +1,30 @@
+.header {
+  @apply
+  flex
+  justify-between
+}
+
+.actions {
+  @apply
+  flex
+  items-center
+  gap-4
+}
+
+.actions p {
+  @apply
+  py-1
+  px-4
+  flex
+  items-center
+  gap-2
+  rounded-md
+  bg-purple-100
+  text-purple-800
+}
+
+.cart {
+  @apply
+  bg-yellow-200
+  text-yellow-800
+}
