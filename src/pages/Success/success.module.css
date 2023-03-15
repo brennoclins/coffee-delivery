@@ -1,0 +1,58 @@
+.success {
+  @apply
+  mt-10
+  flex
+  flex-col
+  gap-2
+}
+
+.successTitle {
+  @apply
+  text-lg
+}
+
+.successTitle h1 {
+  @apply
+  font-semibold
+  text-4xl
+  text-yellow-700
+}
+
+.orderInformation {
+  @apply
+  mt-6
+  flex
+  justify-between
+}
+
+.orderInformationBox {
+  @apply
+  p-16
+  flex
+  flex-col
+  justify-center
+  gap-8
+
+  rounded-tr-3xl
+  rounded-bl-3xl
+  border
+  border-t-purple-700
+  border-r-purple-700
+  border-l-yellow-600
+  border-b-yellow-600
+}
+
+.orderInformationBox div {
+  @apply
+  flex
+  justify-start
+  items-center
+  gap-2
+
+  text-xl
+}
+
+.orderInformationBox svg {
+  @apply
+  p-1.5
+}
