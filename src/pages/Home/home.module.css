@@ -1,0 +1,59 @@
+
+.intro {
+  @apply
+  mt-10
+  flex
+  items-center
+  
+}
+
+.introTextContainer {
+  @apply
+  flex
+  flex-col
+  items-start
+  gap-4
+}
+
+.title {
+  @apply
+  flex
+  flex-col
+  gap-4
+  justify-start
+  items-start
+}
+
+.title strong {
+  @apply
+  text-5xl
+}
+
+.title p {
+  @apply
+  text-lg
+}
+
+.items {
+  @apply
+  w-full
+  mt-6
+  
+  grid
+  grid-cols-2
+  gap-4
+}
+
+.item {
+  @apply
+  flex
+  items-center
+  gap-2
+}
+
+.introImage {
+  @apply
+  w-5/6
+  flex
+  justify-end
+}

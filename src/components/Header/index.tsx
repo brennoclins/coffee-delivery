@@ -12,7 +12,7 @@ export function Header() {
           <MdLocationOn />
           Olinda, PE
         </p>
-        <FaShoppingCart className={styles.cart} />
+        <FaShoppingCart size={28} className={styles.cart} />
       </div>
     </header>
   )

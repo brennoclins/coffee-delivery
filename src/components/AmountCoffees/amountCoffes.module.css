@@ -1,0 +1,25 @@
+
+.counter {
+  @apply
+  p-1
+  flex
+  justify-center
+  items-center
+  gap-2
+  bg-purple-100
+}
+
+.counter svg {
+  @apply
+  p-1.5
+  rounded-md
+  text-purple-800
+  hover:bg-purple-800
+  hover:text-white
+}
+
+.counter span {
+  @apply
+  px-1
+  font-semibold
+}
