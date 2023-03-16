@@ -23,7 +23,7 @@ export function Home() {
               {INTRO_ITEMS.map((item) => {
                 return (
                   <span key={item.text} className={styles.item}>
-                    <img src={item.icon} alt="" />
+                    <img src={item.icon} alt={item.text} />
                     {item.text}
                   </span>
                 );
