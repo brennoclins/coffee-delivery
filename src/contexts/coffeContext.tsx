@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 interface CoffeeProps {
   id: string;
@@ -9,13 +9,17 @@ interface CoffeeProps {
 }
 
 interface CoffeeContextType {
-  coffeeInTheCart: CoffeeProps[];
   amountCoffeesToCart: number;
   updateAmount: (amount: number) => void;
-
-  itemsInCart: number;
+  
+  coffeeInTheCart: CoffeeProps[];
   updateItemsInCart: ({ id, name, amount, value }: CoffeeProps) => void;
+  removeItemInCart: (id:string) => void;
+  
+  totalValueOfItemsInCart: number;
+  deliveryValue: number;
 }
+
 export const CoffeeContext = createContext({} as CoffeeContextType);
 
 interface CoffeeContextProviderProps {
@@ -27,7 +31,25 @@ export function CoffeeContextProvider({
 }: CoffeeContextProviderProps) {
   const [coffeeInTheCart, setCoffeeInTheCart] = useState<CoffeeProps[]>([]);
   const [amountCoffeesToCart, setAmountCoffeesToCart] = useState(0);
-  const [itemsInCart, setItemsInCart] = useState(0);
+  const [totalValueOfItemsInCart, setTotalValueOfItemsInCart] = useState(0);
+  const [deliveryValue, setDeliveryValue] = useState(3.50)
+
+  useEffect(() => {
+    updateTotalValueOfItemsInCart() 
+  }, [coffeeInTheCart])
+
+  // const totalItemsInCart = coffeeInTheCart.length
+  
+  function updateTotalValueOfItemsInCart() {
+    const valueTotalItems = coffeeInTheCart.map(coffee => {
+      return (coffee.amount * coffee.value)
+    }).reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0
+    )
+
+    setTotalValueOfItemsInCart(valueTotalItems)
+  }
 
   function updateAmount(amount: number) {
     setAmountCoffeesToCart(amount);
@@ -61,8 +83,11 @@ export function CoffeeContextProvider({
           },
         ]);
       }
+  }
 
-    setItemsInCart(coffeeInTheCart.length);
+  function removeItemInCart(id:string) {
+    const filterCart = coffeeInTheCart.filter((cart) => cart.id !== id);
+    setCoffeeInTheCart(filterCart);
   }
 
   return (
@@ -71,8 +96,10 @@ export function CoffeeContextProvider({
         coffeeInTheCart,
         amountCoffeesToCart,
         updateAmount,
-        itemsInCart,
         updateItemsInCart,
+        removeItemInCart,
+        totalValueOfItemsInCart,
+        deliveryValue,
       }}
     >
       {children}

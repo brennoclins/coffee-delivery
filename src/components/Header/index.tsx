@@ -7,22 +7,24 @@ import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 
 export function Header() {
-  const { itemsInCart } = useContext(CoffeeContext);
+  const { coffeeInTheCart } = useContext(CoffeeContext);
   return (
     <header className={styles.header}>
-      <img src="./logo.svg" alt="Logo" />
+      <Link to={"/"}>
+        <img src="./logo.svg" alt="Logo" />
+      </Link>
       <div className={styles.actions}>
         <p>
           <MdLocationOn />
           Olinda, PE
         </p>
-        
+
         <Link to={"/checkout"}>
           <FaShoppingCart size={28} className={styles.cart} />
         </Link>
-        
-        {itemsInCart > 0 && (
-          <span className={styles.totalItemsInCart}>{itemsInCart}</span>
+
+        {coffeeInTheCart.length > 0 && (
+          <span className={styles.totalItemsInCart}>{coffeeInTheCart.length}</span>
         )}
       </div>
     </header>

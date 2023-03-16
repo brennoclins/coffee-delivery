@@ -1,14 +1,24 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { CoffeeContext } from "../../contexts/coffeContext";
 
 import styles from "./amountCoffes.module.css"
 
-export function AmountCoffees() {
-  const { updateAmount } = useContext(CoffeeContext)
+interface AmountCoffeesProps {
+  amount?: number
+}
 
+export function AmountCoffees({amount}: AmountCoffeesProps) {
+  const { updateAmount } = useContext(CoffeeContext)
+  
   const [counter, setCounter] = useState(0)
 
+  useEffect(() => {
+    if(amount) {
+      setCounter(amount)
+    }
+  },[])
+    
   function increaseAmountOfCoffees() {
     setCounter(counter + 1)
     updateAmount(counter + 1)

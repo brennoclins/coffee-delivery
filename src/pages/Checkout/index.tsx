@@ -9,9 +9,32 @@ import { useContext } from "react";
 import { CoffeeContext } from "../../contexts/coffeContext";
 
 export function Checkout() {
-  const { coffeeInTheCart } = useContext(CoffeeContext);
+  const { coffeeInTheCart, removeItemInCart, updateItemsInCart, totalValueOfItemsInCart, deliveryValue } =
+    useContext(CoffeeContext);
+  
+ 
+  function removerCoffeeToCart(id: string) {
+    removeItemInCart(id);
+  }
 
-  console.log(coffeeInTheCart);
+  // function updatesTheAmountOfCoffeeInTheCart(
+  //   id: string,
+  //   name: string,
+  //   amount: number,
+  //   value: number,
+  //   imageURL: string
+  // ) {
+  //   if (amount > 0) {
+  //     updateItemsInCart({
+  //       id,
+  //       name,
+  //       amount,
+  //       value,
+  //       imageURL,
+  //     });
+  //   }
+  // }
+
   return (
     <main className={styles.checkout}>
       <section className={styles.address}>
@@ -88,34 +111,38 @@ export function Checkout() {
 
         {coffeeInTheCart.map((coffee) => {
           return (
-            <div key={coffee.id} className={styles.coffeeSelected}>
-              <img src={coffee.imageURL} alt={coffee.name} />
+            <section key={coffee.id}>
+              <div className={styles.coffeeSelected}>
+                <img src={coffee.imageURL} alt={coffee.name} />
 
-              <div className={styles.coffeInfo}>
-                <h3>{coffee.name}</h3>
-                <div>
-                  <AmountCoffees />
-                  <button>REMOVER</button>
+                <div className={styles.coffeInfo}>
+                  <h3>{coffee.name}</h3>
+                  <div>
+                    <AmountCoffees amount={coffee.amount} />
+                    <button onClick={() => removerCoffeeToCart(coffee.id)}>
+                      REMOVER
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <strong>{String(coffee.value)}</strong>
-            </div>
+                <strong>R$ {String(coffee.value)}</strong>
+              </div>
+            </section>
           );
         })}
 
         <div className={styles.paymentDetails}>
           <div>
-            Total de itens <span>R$ 9,90</span>
+            Total de itens <span>R$ {totalValueOfItemsInCart}</span>
           </div>
 
           <div>
-            Entrega <span>R$ 3,50</span>
+            Entrega <span>R$ {totalValueOfItemsInCart > 0 ? deliveryValue : 0}</span>
           </div>
 
           <div className={styles.paymentTotal}>
             <strong>TOTAL</strong>
-            <strong>R$ 33,20</strong>
+            <strong>R$ {totalValueOfItemsInCart > 0 ? totalValueOfItemsInCart + deliveryValue : 0 }</strong>
           </div>
 
           <button>CONFIRMAR PEDIDO</button>
