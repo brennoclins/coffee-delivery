@@ -9,15 +9,26 @@ interface CoffeeProps {
 }
 
 interface CoffeeContextType {
-  amountCoffeesToCart: number;
-  updateAmount: (amount: number) => void;
-  
-  coffeeInTheCart: CoffeeProps[];
-  updateItemsInCart: ({ id, name, amount, value }: CoffeeProps) => void;
-  removeItemInCart: (id:string) => void;
-  
+  coffeeOnTheCart: CoffeeProps[];
+  updateCoffeesInCart: ({ id, name, amount, value, imageURL }: CoffeeProps) => void;
+  removeCoffeeFromCart: (id: string) => void;
+
+  updateIndividualQuantityOfCoffeeInTheOrder: (id: string, amount: number) => void;
   totalValueOfItemsInCart: number;
   deliveryValue: number;
+  individualQuantityOfCoffeeInTheOrder: number;
+
+  orders: Order[];
+  createNewOrder: ({
+    zipCode,
+    publicPlace,
+    number,
+    district,
+    city,
+    state,
+    observation,
+    formOfPayment,
+  }: NewOrderFormData) => void
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType);
@@ -26,80 +37,188 @@ interface CoffeeContextProviderProps {
   children: ReactNode;
 }
 
+type Address = {
+  zipCode: string;
+  publicPlace: string;
+  number: string;
+  district: string;
+  city: string;
+  state: string;
+  observation: string;
+}
+
+type Item = {
+  name: string;
+  amount: number;
+  totalAmountPerItem: number;
+}
+
+type Order = {
+  orderId: string;
+  deliveryAddress: Address;
+  formOfPayment: string;
+  deliveryValue: number;
+  totalOrder: number;
+  orderItems: Item[];
+}
+
+type NewOrderFormData = {
+  zipCode: string;
+  publicPlace: string;
+  number: string;
+  district: string;
+  city: string;
+  state: string;
+  observation: string;
+  formOfPayment: string;
+}
+
 export function CoffeeContextProvider({
   children,
 }: CoffeeContextProviderProps) {
-  const [coffeeInTheCart, setCoffeeInTheCart] = useState<CoffeeProps[]>([]);
-  const [amountCoffeesToCart, setAmountCoffeesToCart] = useState(0);
-  const [totalValueOfItemsInCart, setTotalValueOfItemsInCart] = useState(0);
-  const [deliveryValue, setDeliveryValue] = useState(3.50)
+  const [coffeeOnTheCart, setCoffeeOnTheCart] = useState<CoffeeProps[]>([]);
+  const [totalValueOfItemsInCart, setTotalValueOfItemsInCart] = useState(0); // valor unitario * quantidade
+  const [deliveryValue, setDeliveryValue] = useState(3.5); //valor da entrega
+  const [individualQuantityOfCoffeeInTheOrder, setIndividualQuantityOfCoffeeInTheOrder] = useState(0)
+  
+  const [orders, setOders] = useState<Order[]>([]);
 
   useEffect(() => {
-    updateTotalValueOfItemsInCart() 
-  }, [coffeeInTheCart])
+    updateTotalValueOfItemsInCart();
+  }, [coffeeOnTheCart, individualQuantityOfCoffeeInTheOrder]);
 
-  // const totalItemsInCart = coffeeInTheCart.length
-  
+
   function updateTotalValueOfItemsInCart() {
-    const valueTotalItems = coffeeInTheCart.map(coffee => {
-      return (coffee.amount * coffee.value)
-    }).reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      0
-    )
+    const valueTotalItems = coffeeOnTheCart
+      .map((coffee) => {
+        return coffee.amount * coffee.value;
+      })
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-    setTotalValueOfItemsInCart(valueTotalItems)
+    setTotalValueOfItemsInCart(valueTotalItems);
   }
 
-  function updateAmount(amount: number) {
-    setAmountCoffeesToCart(amount);
-  }
-
-  function updateItemsInCart({ id, name, amount, value, imageURL }: CoffeeProps) {
-    const coffeeAlreadyWxistsInTheCart = coffeeInTheCart.find(
-        (cart) => cart.id === id
+  function updateCoffeesInCart({
+    id,
+    name,
+    amount,
+    value,
+    imageURL,
+  }: CoffeeProps) {
+    const coffeeAlreadyWxistsInTheCart = coffeeOnTheCart.find(
+      (cart) => cart.id === id
     );
     if (coffeeAlreadyWxistsInTheCart) {
-        const filterCart = coffeeInTheCart.filter((cart) => cart.id !== id);
-        setCoffeeInTheCart([
-          ...filterCart,
-          {
-            id,
-            name,
-            amount,
-            value,
-            imageURL,
-          },
-        ]);
-      } else {
-        setCoffeeInTheCart((preState) => [
-          ...preState,
-          {
-            id,
-            name,
-            amount,
-            value,
-            imageURL,
-          },
-        ]);
-      }
+      const filterCart = coffeeOnTheCart.filter((cart) => cart.id !== id);
+      setCoffeeOnTheCart([
+        ...filterCart,
+        {
+          id,
+          name,
+          amount,
+          value,
+          imageURL,
+        },
+      ]);
+    } else {
+      setCoffeeOnTheCart((preState) => [
+        ...preState,
+        {
+          id,
+          name,
+          amount,
+          value,
+          imageURL,
+        },
+      ]);
+    }
+    setIndividualQuantityOfCoffeeInTheOrder(0)
+  }
+  
+  function removeCoffeeFromCart(id: string) {
+    const filterCart = coffeeOnTheCart.filter((cart) => cart.id !== id);
+    setCoffeeOnTheCart(filterCart);
+    setIndividualQuantityOfCoffeeInTheOrder(0)
   }
 
-  function removeItemInCart(id:string) {
-    const filterCart = coffeeInTheCart.filter((cart) => cart.id !== id);
-    setCoffeeInTheCart(filterCart);
+  function updateIndividualQuantityOfCoffeeInTheOrder(
+    id: string,
+    amount: number
+  ) {
+
+    const coffeeAvailableOnRequest = coffeeOnTheCart.map((coffee) => {
+      if (coffee.id === id)
+        coffee.amount = amount
+      
+        return coffee
+    }
+    );
+
+    if (!coffeeAvailableOnRequest === undefined) {
+      setCoffeeOnTheCart(coffeeAvailableOnRequest)
+    } else {
+      setIndividualQuantityOfCoffeeInTheOrder(amount)    
+    }    
   }
 
+  function createNewOrder({
+    zipCode,
+    publicPlace,
+    number,
+    district,
+    city,
+    state,
+    observation,
+    formOfPayment,
+  }: NewOrderFormData
+  ) {
+    const orderItems = coffeeOnTheCart.map((coffees) => {
+      const totalAmountPerItem = coffees.value * coffees.amount;
+      const name = coffees.name;
+      const amount = coffees.amount;
+
+      return {
+        name,
+        amount,
+        totalAmountPerItem,
+      };
+    });
+
+    const orderId = String(new Date().getTime());
+
+    const newOrder: Order = {
+      orderId,
+      deliveryAddress: {
+        zipCode,
+        publicPlace,
+        number,
+        district,
+        city,
+        state,
+        observation,
+      },
+      formOfPayment,
+      deliveryValue,
+      totalOrder: totalValueOfItemsInCart + deliveryValue,
+      orderItems,
+    };
+
+    setOders((preOrder) => [...preOrder, newOrder]);    
+  }
+
+ 
   return (
     <CoffeeContext.Provider
       value={{
-        coffeeInTheCart,
-        amountCoffeesToCart,
-        updateAmount,
-        updateItemsInCart,
-        removeItemInCart,
+        coffeeOnTheCart,
+        updateCoffeesInCart,
+        removeCoffeeFromCart,
+        updateIndividualQuantityOfCoffeeInTheOrder,
         totalValueOfItemsInCart,
         deliveryValue,
+        individualQuantityOfCoffeeInTheOrder,
+        createNewOrder,
+        orders
       }}
     >
       {children}

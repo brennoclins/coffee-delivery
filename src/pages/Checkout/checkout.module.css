@@ -1,16 +1,28 @@
 .checkout {
   @apply
   flex
+  my-4
+}
+
+.checkoutForm {
+  @apply
+  flex
+  flex-col
   gap-2
   mt-10
+
+  lg:flex-row
 }
+
 
 .address {
   @apply
-  w-7/12
   p-1
   flex
   flex-col
+  
+  /* lg:w-7/12
+  2xl:w-9/12 */
 }
 
 .addressTitle {
@@ -92,8 +104,18 @@
   gap-2
 }
 
-.formOfPayment button {
+.formOfPayment input[type="radio"] {
+  position: absolute;
+  opacity: 0.5;
+  cursor: pointer;
+  height: 1%;
+  width: 1%;
+  left: 0%;
+}
+
+.formOfPayment label {
   @apply
+  relative
   p-2
   w-1/3
 
@@ -106,19 +128,23 @@
   text-black
 
   rounded-md
-
   hover:bg-purple-300
 }
 
-.formOfPayment button:active {
+.formOfPayment input:checked + label {
   @apply
-  scale-95
-}
+  border
+  border-purple-900
+  bg-purple-700
+  text-white  
+ }
 
 /* DETALHES DO PEDIDO */
 
 .orderDetails {
   @apply
+  lg:w-full
+  xl:w-9/12
   flex
   flex-col
 }
@@ -204,14 +230,23 @@
 
 .paymentDetails button {
   @apply
+  w-full
   mt-6
   p-2
-
-  bg-purple-600
-  text-white
+  
   font-bold
+  text-center
+  text-white
+  bg-purple-600
   rounded-md
 
+  hover:bg-purple-700
+  
   active:scale-95
   active:brightness-95
+
+  disabled:bg-purple-300
+  disabled:cursor-not-allowed
+  disabled:scale-100
+  disabled:brightness-100
 }

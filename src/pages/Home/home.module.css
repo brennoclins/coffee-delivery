@@ -3,8 +3,10 @@
   @apply
   mt-10
   flex
+  flex-col
   items-center
-  
+
+  lg:flex-row
 }
 
 .introTextContainer {
@@ -26,21 +28,25 @@
 
 .title strong {
   @apply
-  text-5xl
+  text-4xl
+  md:text-5xl
 }
 
 .title p {
   @apply
-  text-lg
+  md:text-lg
 }
 
 .items {
   @apply
   w-full
-  mt-6
   
-  grid
-  grid-cols-2
+  flex
+  flex-col
+   
+  md:mt-6
+  md:grid
+  md:grid-cols-2
   gap-4
 }
 
@@ -53,7 +59,8 @@
 
 .introImage {
   @apply
-  w-5/6
+  w-0
+  lg:w-5/6
   flex
   justify-end
 }

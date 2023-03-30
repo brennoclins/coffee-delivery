@@ -7,7 +7,7 @@ import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 
 export function Header() {
-  const { coffeeInTheCart } = useContext(CoffeeContext);
+  const { coffeeOnTheCart } = useContext(CoffeeContext);
   return (
     <header className={styles.header}>
       <Link to={"/"}>
@@ -23,8 +23,8 @@ export function Header() {
           <FaShoppingCart size={28} className={styles.cart} />
         </Link>
 
-        {coffeeInTheCart.length > 0 && (
-          <span className={styles.totalItemsInCart}>{coffeeInTheCart.length}</span>
+        {coffeeOnTheCart.length > 0 && (
+          <span className={styles.totalItemsInCart}>{coffeeOnTheCart.length}</span>
         )}
       </div>
     </header>

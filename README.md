@@ -10,9 +10,9 @@ Applicativo para gerenciar um carrinho de compras de uma cafeteria, funcionalida
 - Exibir o valor total da soma de itens no carrinho multiplicados pelo valor
 
 # TECHS and LIBS
-- [vite]()
-- [tailwindCSS]()
-- [react-router-dom]()
-- [react-hook-form]()
+- [vite](https://vitejs.dev/)
+- [tailwindCSS](https://tailwindcss.com/)
+- [react-router-dom](https://reactrouter.com/en/main)
+- [react-hook-form](https://react-hook-form.com/)
+- [@hookform/resovers](https://github.com/react-hook-form/resolvers)
 - [zod](https://zod.dev/)
-- [@hookform/resovers]()

@@ -8,31 +8,43 @@
 
 .successTitle {
   @apply
-  text-lg
+  md:text-lg
 }
 
 .successTitle h1 {
   @apply
   font-semibold
-  text-4xl
   text-yellow-700
+  text-xl
+  
+  md:text-4xl
 }
 
 .orderInformation {
   @apply
   mt-6
   flex
+  flex-col
   justify-between
+
+  xl:flex-row
 }
+
+/* .orderInformation img {
+  @apply
+  w-0
+  md:w-full
+} */
 
 .orderInformationBox {
   @apply
-  p-16
+  p-4
   flex
-  flex-col
   justify-center
+  flex-col
+  
   gap-8
-
+  
   rounded-tr-3xl
   rounded-bl-3xl
   border
@@ -40,6 +52,8 @@
   border-r-purple-700
   border-l-yellow-600
   border-b-yellow-600
+  
+  lg:p-16
 }
 
 .orderInformationBox div {
@@ -49,10 +63,96 @@
   items-center
   gap-2
 
-  text-xl
+  md:text-xl
 }
 
 .orderInformationBox svg {
   @apply
   p-1.5
+}
+
+.orderDetails {
+  @apply
+  mt-4
+  p-4
+  
+  flex
+  flex-col
+  justify-center
+  gap-4
+
+  rounded-tl-3xl
+  rounded-br-3xl
+  border-2
+  border-t-yellow-600
+  border-r-yellow-600
+  border-l-purple-700
+  border-b-purple-700
+
+  md:text-xl
+  lg:p-8
+}
+
+.orderDetailsTitle {
+  @apply
+  text-xl
+  font-bold
+
+  lg:text-3xl
+}
+
+.orderDetailsContainer {
+  @apply
+  p-4
+  bg-yellow-100/75
+  rounded-md
+  flex
+  flex-col
+  gap-4
+  
+  lg:p-6
+  lg:text-xl
+}
+
+.orderDetailsCode {
+  @apply
+  flex
+  justify-between
+  items-center
+}
+
+.orderDetailsItems {
+  @apply
+  flex
+  flex-col
+  gap-2
+}
+
+.orderDetailsItems div {
+  @apply
+  ml-2
+  flex
+  justify-between
+  items-center
+  gap-4
+
+  text-start
+  text-sm
+
+  md:text-lg
+  lg:ml-10
+}
+
+.orderDetailsTotal {
+  @apply
+  flex
+  items-center
+  justify-between
+}
+
+.orderDetailsTotal strong {
+  @apply
+  text-2xl
+  lg:text-4xl
+  text-green-900
 }

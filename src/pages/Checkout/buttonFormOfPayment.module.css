@@ -1,0 +1,36 @@
+.formOfPaymentButton {
+  @apply
+  relative
+  p-2
+  w-1/3
+
+  flex
+  justify-center
+  items-center
+  gap-2
+
+  bg-gray-200
+  text-black
+
+  rounded-md
+
+  hover:bg-purple-300
+}
+
+.formOfPaymentButtonSelected {
+  @apply
+  border
+  border-purple-900
+  bg-purple-700
+  text-white
+
+  hover:text-purple-800
+}
+
+input[type="radio"] {
+  position: absolute;
+  opacity: 0.5;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+}

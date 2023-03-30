@@ -1,15 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
-import { AmountCoffees } from "../AmountCoffees/intex";
+import { AmountCoffees } from "../AmountCoffees";
 import { CoffeeContext } from "../../contexts/coffeContext";
 
-import { COFFEE_LIST } from "../../apiFake";
+import { COFFEE_IN_THE_DATABASE } from "../../apiFake";
 import styles from "./coffeeList.module.css";
 
 export function CoffeeList() {
-  const { amountCoffeesToCart, updateAmount, updateItemsInCart } =
-    useContext(CoffeeContext);
+  const { individualQuantityOfCoffeeInTheOrder, updateCoffeesInCart } = useContext(CoffeeContext);
+  
+  const COFFEES_LIST = COFFEE_IN_THE_DATABASE.map(coffees => {
+    return {
+      ...coffees,
+      amount: 0
+    }
+  })
 
   function addCoffeeToCart(
     id: string,
@@ -19,14 +25,13 @@ export function CoffeeList() {
     imageURL: string,
   ) {
     if (amount > 0) {
-      updateItemsInCart({
+      updateCoffeesInCart({
         id,
         name,
         amount,
         value,
         imageURL,
       });
-      updateAmount(0);
     }
   }
 
@@ -34,7 +39,7 @@ export function CoffeeList() {
     <section className={styles.coffeList}>
       <h2>Nossos Cafés</h2>
       <div className={styles.list}>
-        {COFFEE_LIST.map((coffee) => {
+        {COFFEES_LIST.map((coffee) => {
           return (
             <div key={coffee.id} className={styles.coffeCard}>
               <img src={coffee.imageURL} alt={coffee.name} />
@@ -48,19 +53,17 @@ export function CoffeeList() {
                 </div>
 
                 <div className={styles.buyActions}>
-                  <AmountCoffees />
+                  <AmountCoffees coffeeId={coffee.id} amount={coffee.amount} />
                   <FaShoppingCart
                     size={28}
                     className={styles.buyIconButton}
-                    onClick={() =>
-                      addCoffeeToCart(
-                        coffee.id,
-                        coffee.name,
-                        amountCoffeesToCart,
-                        coffee.value,
-                        coffee.imageURL
-                      )
-                    }
+                    onClick={() => addCoffeeToCart(
+                      coffee.id,
+                      coffee.name,
+                      individualQuantityOfCoffeeInTheOrder,
+                      coffee.value,
+                      coffee.imageURL,
+                    ) }
                   />
                 </div>
               </div>

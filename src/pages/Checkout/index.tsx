@@ -1,46 +1,99 @@
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as zod from "zod";
 import { BsCreditCard2Back } from "react-icons/bs";
 import { MdPix } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
 
-import { AmountCoffees } from "../../components/AmountCoffees/intex";
+import { AmountCoffees } from "../../components/AmountCoffees";
 
 import styles from "./checkout.module.css";
-import { useContext } from "react";
 import { CoffeeContext } from "../../contexts/coffeContext";
+import { Link, useNavigate } from "react-router-dom";
+
+const newOrderFormeValidationSchema = zod.object({
+  zipCode: zod.string().min(8, "Informe o CEP."),
+  publicPlace: zod.string(),
+  number: zod.string(),
+  district: zod.string(),
+  city: zod.string(),
+  state: zod.string(),
+  observation: zod.string(),
+  formOfPayment: zod.string(),
+  // deliveryValue: zod.number(),
+  // totalOrder: zod.number(),
+  // orderItens: zod.object({
+  //   name: zod.string(),
+  //   amount: zod.number(),
+  //   totalAmountPerItem: zod.number(),
+  // })
+});
+
+type NewOrderFormData = zod.infer<typeof newOrderFormeValidationSchema>;
 
 export function Checkout() {
-  const { coffeeInTheCart, removeItemInCart, updateItemsInCart, totalValueOfItemsInCart, deliveryValue } =
-    useContext(CoffeeContext);
-  
+  const navigate = useNavigate()
+  const { register, handleSubmit, watch, reset } = useForm({
+    resolver: zodResolver(newOrderFormeValidationSchema),
+    defaultValues: {
+      zipCode: "",
+      publicPlace: "",
+      number: "",
+      district: "",
+      city: "",
+      state: "",
+      observation: "",
+      formOfPayment: "card",
+      // deliveryValue: 3.5,
+      // totalOrder: 0,
+      // orderItens: {
+      //   name: "",
+      //   amount: 0,
+      //   totalAmountPerItem: 0
+      // }
+    },
+  });
+
+  const {
+    coffeeOnTheCart,
+    removeCoffeeFromCart,
+    totalValueOfItemsInCart,
+    deliveryValue,
+    createNewOrder,
+  } = useContext(CoffeeContext);
  
   function removerCoffeeToCart(id: string) {
-    removeItemInCart(id);
+    removeCoffeeFromCart(id);
   }
 
-  // function updatesTheAmountOfCoffeeInTheCart(
-  //   id: string,
-  //   name: string,
-  //   amount: number,
-  //   value: number,
-  //   imageURL: string
-  // ) {
-  //   if (amount > 0) {
-  //     updateItemsInCart({
-  //       id,
-  //       name,
-  //       amount,
-  //       value,
-  //       imageURL,
-  //     });
-  //   }
-  // }
+  function handleCreateNewOrder({
+    zipCode,
+    publicPlace,
+    number,
+    district,
+    city,
+    state,
+    observation,
+    formOfPayment,
+  }: NewOrderFormData) {   
+       
+    createNewOrder({ zipCode, publicPlace, number, district, city, state, observation, formOfPayment })
+    // reset(); 
+    navigate("/success")
+  }
+  
+  const filledZipCode = watch("zipCode");
+  const isSubmitDisabled = !filledZipCode;
 
   return (
     <main className={styles.checkout}>
-      <section className={styles.address}>
-        <h1 className={styles.addressTitle}>Complete seu pedido</h1>
-
-        <form>
+      <form
+        className={styles.checkoutForm}
+        onSubmit={handleSubmit(handleCreateNewOrder)}
+      >
+        <section className={styles.address}>
+          <h1 className={styles.addressTitle}>Complete seu pedido</h1>
           <div className={styles.cardAddress}>
             <div>
               <h3>Endereço de entrega</h3>
@@ -48,23 +101,43 @@ export function Checkout() {
             </div>
 
             <div className={styles.addressInputs}>
-              <input type="text" placeholder="CEP" name="cep" />
-              <input type="text" placeholder="Nome da rua" name="address" />
+              <input
+                type="text"
+                placeholder="CEP"
+                {...register("zipCode")}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Nome da rua"
+                {...register("publicPlace")}
+              />
 
               <div>
                 <input
-                  className="w-1/12"
+                  className="w-2/12"
                   type="text"
                   placeholder="Número"
-                  name="number"
+                  {...register("number")}
                 />
-                <input className="w-5/12" type="text" placeholder="Bairro" />
-                <input className="w-5/12" type="text" placeholder="Cidade" />
+                <input
+                  className="w-5/12"
+                  type="text"
+                  placeholder="Bairro"
+                  {...register("district")}
+                />
+                <input
+                  className="w-5/12"
+                  type="text"
+                  placeholder="Cidade"
+                  {...register("city")}
+                />
                 <input
                   className="w-1/12"
                   type="text"
-                  placeholder="UF"
                   defaultValue={"PE"}
+                  placeholder="UF"
+                  {...register("state")}
                 />
               </div>
 
@@ -72,9 +145,9 @@ export function Checkout() {
                 <h2>Observações do cliente</h2>
                 <textarea
                   className="w-full"
-                  name="obs"
                   rows={5}
                   placeholder="Observações, ponto de referencia, informações para o momento da entrega, etc."
+                  {...register("observation")}
                 ></textarea>
               </div>
             </div>
@@ -89,65 +162,101 @@ export function Checkout() {
             </div>
 
             <div className={styles.formOfPayment}>
-              <button>
+              <input
+                type="radio"
+                {...register("formOfPayment")}
+                id="card"
+                value={"card"}
+                defaultChecked
+              />
+              <label htmlFor="card">
                 <BsCreditCard2Back />
                 CARTÃO
-              </button>
-              <button>
+              </label>
+
+              <input
+                type="radio"
+                {...register("formOfPayment")}
+                id="pix"
+                value={"pix"}
+              />
+              <label htmlFor="pix">
                 <MdPix />
                 PIX
-              </button>
-              <button>
+              </label>
+
+              <input
+                type="radio"
+                {...register("formOfPayment")}
+                id="money"
+                value={"money"}
+              />
+              <label htmlFor="money">
                 <GiMoneyStack />
                 DINHEIRO
-              </button>
+              </label>
             </div>
           </div>
-        </form>
-      </section>
+        </section>
 
-      <section className={styles.orderDetails}>
-        <h1 className={styles.orderDetailsTitle}>Cafés selecionados</h1>
+        <section className={styles.orderDetails}>
+          <h1 className={styles.orderDetailsTitle}>Cafés selecionados</h1>
 
-        {coffeeInTheCart.map((coffee) => {
-          return (
-            <section key={coffee.id}>
-              <div className={styles.coffeeSelected}>
-                <img src={coffee.imageURL} alt={coffee.name} />
+          {coffeeOnTheCart.map((coffee) => {
+            return (
+              <section key={coffee.id}>
+                <div className={styles.coffeeSelected}>
+                  <img src={coffee.imageURL} alt={coffee.name} />
 
-                <div className={styles.coffeInfo}>
-                  <h3>{coffee.name}</h3>
-                  <div>
-                    <AmountCoffees amount={coffee.amount} />
-                    <button onClick={() => removerCoffeeToCart(coffee.id)}>
-                      REMOVER
-                    </button>
+                  <div className={styles.coffeInfo}>
+                    <h3>{coffee.name}</h3>
+                    <div>
+                      <AmountCoffees
+                        amount={coffee.amount}
+                        coffeeId={coffee.id}
+                      />
+                      <button onClick={() => removerCoffeeToCart(coffee.id)}>
+                        REMOVER
+                      </button>
+                    </div>
                   </div>
+
+                  <strong>R$ {String(coffee.value)}</strong>
                 </div>
+              </section>
+            );
+          })}
 
-                <strong>R$ {String(coffee.value)}</strong>
-              </div>
-            </section>
-          );
-        })}
+          <div className={styles.paymentDetails}>
+            <div>
+              Total de itens <span>R$ {totalValueOfItemsInCart}</span>
+            </div>
 
-        <div className={styles.paymentDetails}>
-          <div>
-            Total de itens <span>R$ {totalValueOfItemsInCart}</span>
+            <div>
+              Entrega{" "}
+              <span>R$ {totalValueOfItemsInCart > 0 ? deliveryValue : 0}</span>
+            </div>
+
+            <div className={styles.paymentTotal}>
+              <strong>TOTAL</strong>
+              <strong>
+                R${" "}
+                {totalValueOfItemsInCart > 0
+                  ? totalValueOfItemsInCart + deliveryValue
+                  : 0}
+              </strong>
+            </div>
+
+              <button
+                className={styles.paymentDetailsSubmitButton}
+                disabled={isSubmitDisabled}
+                type="submit"
+              >
+                CONFIRMAR PEDIDO
+              </button>
           </div>
-
-          <div>
-            Entrega <span>R$ {totalValueOfItemsInCart > 0 ? deliveryValue : 0}</span>
-          </div>
-
-          <div className={styles.paymentTotal}>
-            <strong>TOTAL</strong>
-            <strong>R$ {totalValueOfItemsInCart > 0 ? totalValueOfItemsInCart + deliveryValue : 0 }</strong>
-          </div>
-
-          <button>CONFIRMAR PEDIDO</button>
-        </div>
-      </section>
+        </section>
+      </form>
     </main>
   );
 }

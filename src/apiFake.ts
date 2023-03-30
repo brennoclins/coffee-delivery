@@ -17,10 +17,10 @@ export const INTRO_ITEMS = [
   }
 ]
 
-export const COFFEE_LIST = [
+export const COFFEE_IN_THE_DATABASE = [
   {
     id: "1",
-    imageURL: "/coffes/01-coffee.svg",
+    imageURL: "/coffees/01-coffee.svg",
     value: 10.00,
     tags: ["tradicional"],
     name: "Expresso Tradicional",
@@ -28,7 +28,7 @@ export const COFFEE_LIST = [
   },
   {
     id: "2",
-    imageURL: "/coffes/02-coffee.svg",
+    imageURL: "/coffees/02-coffee.svg",
     value: 9.50,
     tags: ["tradicional"],
     name: "Expresso Americano",
@@ -36,7 +36,7 @@ export const COFFEE_LIST = [
   },
   {
     id: "3",
-    imageURL: "/coffes/03-coffee.svg",
+    imageURL: "/coffees/03-coffee.svg",
     value: 9.50,
     tags: ["tradicional"],
     name: "Expresso Cremoso",
@@ -44,7 +44,7 @@ export const COFFEE_LIST = [
   },
   {
     id: "4",
-    imageURL: "/coffes/04-coffee.svg",
+    imageURL: "/coffees/04-coffee.svg",
     value: 8.50,
     tags: ["tradicional", "gelado"],
     name: "Expresso Gelado",
@@ -52,10 +52,18 @@ export const COFFEE_LIST = [
   },
   {
     id: "5",
-    imageURL: "/coffes/05-coffee.svg",
+    imageURL: "/coffees/05-coffee.svg",
     value: 11.50,
     tags: ["tradicional", "com leite"],
     name: "Café com leite",
     description: "Meio a meio expresso tradicional com leite vaporizado",
   },
+  {
+    id: "6",
+    imageURL: "/coffees/06-coffee.svg",
+    value: 12.50,
+    tags: ["tradicional", "com leite"],
+    name: "Latte",
+    description: "Uma dose de café expresso com o dobro de leite e espuma cremosa",
+  }
 ]
