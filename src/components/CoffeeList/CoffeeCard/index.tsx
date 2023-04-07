@@ -1,7 +1,7 @@
 import { FaShoppingCart } from "react-icons/fa";
 
 import { AmountCoffees } from "../../AmountCoffees";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CoffeeContext } from "../../../contexts/coffeContext";
 
 import styles from "./coffeeCard.module.css";
