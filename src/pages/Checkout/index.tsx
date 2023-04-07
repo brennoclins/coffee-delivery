@@ -166,7 +166,7 @@ export function Checkout() {
                 type="radio"
                 {...register("formOfPayment")}
                 id="card"
-                value={"card"}
+                value={"CARTÃO"}
                 defaultChecked
               />
               <label htmlFor="card">
@@ -178,7 +178,7 @@ export function Checkout() {
                 type="radio"
                 {...register("formOfPayment")}
                 id="pix"
-                value={"pix"}
+                value={"PIX"}
               />
               <label htmlFor="pix">
                 <MdPix />
@@ -189,7 +189,7 @@ export function Checkout() {
                 type="radio"
                 {...register("formOfPayment")}
                 id="money"
-                value={"money"}
+                value={"DINHEIRO"}
               />
               <label htmlFor="money">
                 <GiMoneyStack />
