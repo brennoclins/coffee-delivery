@@ -1,0 +1,148 @@
+.coffeeCard {
+  @apply
+  mt-10
+  p-4
+  flex
+  flex-col
+  justify-center
+  items-center
+  text-center
+  bg-gray-200
+  rounded-tr-3xl
+  rounded-bl-3xl
+
+  relative
+  transition-all
+  duration-1000
+}
+
+.coffeeCardImage {
+  @apply
+  -translate-y-10
+}
+
+.tags {
+  @apply
+  flex
+  gap-1
+  
+  text-sm
+  text-orange-600
+}
+.tags span {
+  @apply
+  py-0.5
+  px-2
+  bg-yellow-100
+  capitalize
+  
+  rounded-md
+}
+
+.name {
+ @apply
+ font-bold
+ p-2 
+}
+
+.description {
+  @apply
+  text-gray-500
+}
+
+.buy {
+  @apply
+  mt-6
+  flex
+  justify-center
+  items-center
+  gap-2
+}
+
+.value {
+  @apply
+  flex
+  items-center
+  gap-2
+  text-gray-500
+}
+
+.value strong {
+  @apply
+  text-2xl
+  text-black
+}
+
+.buyActions {
+  @apply
+  flex
+  items-center
+  gap-2
+}
+
+.buyIconButton {
+  @apply
+  p-1.5
+  text-white
+  bg-purple-800
+  rounded-md
+
+  hover:bg-green-800
+}
+
+
+.coffeeCardSelected {
+  @apply
+  p-8
+  bg-amber-900
+  text-white
+
+  rounded-tr-none
+  rounded-bl-none
+  rounded-tl-3xl
+  rounded-br-3xl
+}
+
+.coffeCardselectedImage {
+  @apply
+  w-full
+  p-2
+  bg-amber-700
+  rounded-lg
+
+  flex
+  flex-col
+  items-center
+  gap-2
+  -translate-y-12
+}
+
+.coffeCardselectedImage img {
+  @apply
+  w-1/2
+  -rotate-45
+}
+
+
+.checkoutButton {
+  @apply
+  m-2
+  py-2
+  px-4
+  
+  flex
+  items-center
+  gap-2
+
+  text-sm
+  font-medium
+  uppercase
+
+  bg-purple-600
+  rounded-md
+
+  hover:bg-amber-700
+
+  transition-all
+  duration-300
+}

@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { COFFEE_IN_THE_DATABASE } from "../apiFake";
 
 interface CoffeeProps {
   id: string;
@@ -28,7 +29,10 @@ interface CoffeeContextType {
     state,
     observation,
     formOfPayment,
-  }: NewOrderFormData) => void
+  }: NewOrderFormData) => void;
+
+  coffeesList: CoffeListProps[];
+  selectCoffeeFromTheList: (id: string, amount: number) => void;
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType);
@@ -73,6 +77,25 @@ type NewOrderFormData = {
   formOfPayment: string;
 }
 
+type CoffeListProps = {
+  id: string;
+  imageURL: string;
+  value: number;
+  tags: string[];
+  name: string;
+  description: string;
+  amount: number;
+  isSelected: boolean;
+}
+
+const COFFEES_LIST = COFFEE_IN_THE_DATABASE.map((coffees) => {
+  return {
+    ...coffees,
+    amount: 0,
+    isSelected: false,
+  };
+});
+
 export function CoffeeContextProvider({
   children,
 }: CoffeeContextProviderProps) {
@@ -82,6 +105,36 @@ export function CoffeeContextProvider({
   const [individualQuantityOfCoffeeInTheOrder, setIndividualQuantityOfCoffeeInTheOrder] = useState(0)
   
   const [orders, setOders] = useState<Order[]>([]);
+
+  const [coffeesList, setCoffeesList] = useState(COFFEES_LIST);
+  
+  function selectCoffeeFromTheList(id: string, amount: number) {
+    coffeesList.filter(coffee => {
+      if (coffee.id == id) {
+        coffee.isSelected = true
+        coffee.amount = amount
+      }
+      return coffee.id == id
+    })
+
+    // coffeesList.filter(coffee => {
+    //   if (coffee.id == coffeeOnTheCart[coffeeOnTheCart.length -1].id) {
+    //     coffee.isSelected = true
+    //     coffee.amount = coffeeOnTheCart[coffeeOnTheCart.length -1].amount
+    //   }
+    //   return coffee.id == coffeeOnTheCart[coffeeOnTheCart.length -1].id
+    // })
+  }
+
+  function desselectCoffeeFromTheList(id: string) {
+    coffeesList.filter(coffee => {
+      if (coffee.id == id) {
+        coffee.isSelected = false
+        coffee.amount = 0
+      }
+      return coffee.id == id
+    })
+  }
 
   useEffect(() => {
     updateTotalValueOfItemsInCart();
@@ -138,7 +191,8 @@ export function CoffeeContextProvider({
   function removeCoffeeFromCart(id: string) {
     const filterCart = coffeeOnTheCart.filter((cart) => cart.id !== id);
     setCoffeeOnTheCart(filterCart);
-    setIndividualQuantityOfCoffeeInTheOrder(0)
+    setIndividualQuantityOfCoffeeInTheOrder(0);
+    desselectCoffeeFromTheList(id);
   }
 
   function updateIndividualQuantityOfCoffeeInTheOrder(
@@ -218,7 +272,9 @@ export function CoffeeContextProvider({
         deliveryValue,
         individualQuantityOfCoffeeInTheOrder,
         createNewOrder,
-        orders
+        orders,
+        coffeesList,
+        selectCoffeeFromTheList,
       }}
     >
       {children}

@@ -69,7 +69,7 @@ export function Success() {
           </div>
 
           <div className={styles.orderDetailsItems}>
-            <h4>Itens do pedido</h4>
+            <h4>Itens do pedido:</h4>
          
           {customerRequest.orderItems.map((item) => {
             return (

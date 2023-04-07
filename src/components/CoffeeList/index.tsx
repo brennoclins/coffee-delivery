@@ -1,73 +1,41 @@
-import { useContext} from "react";
-import { FaShoppingCart } from "react-icons/fa";
-
-import { AmountCoffees } from "../AmountCoffees";
+import { useContext } from "react";
 import { CoffeeContext } from "../../contexts/coffeContext";
 
-import { COFFEE_IN_THE_DATABASE } from "../../apiFake";
+import { CoffeeCard } from "./CoffeeCard";
+
 import styles from "./coffeeList.module.css";
 
 export function CoffeeList() {
-  const { individualQuantityOfCoffeeInTheOrder, updateCoffeesInCart } = useContext(CoffeeContext);
-  
-  const COFFEES_LIST = COFFEE_IN_THE_DATABASE.map(coffees => {
-    return {
-      ...coffees,
-      amount: 0
-    }
-  })
-
-  function addCoffeeToCart(
-    id: string,
-    name: string,
-    amount: number,
-    value: number,
-    imageURL: string,
-  ) {
-    if (amount > 0) {
-      updateCoffeesInCart({
-        id,
-        name,
-        amount,
-        value,
-        imageURL,
-      });
-    }
+  const { coffeeOnTheCart, coffeesList, selectCoffeeFromTheList } = useContext(CoffeeContext);
+ 
+  if (coffeeOnTheCart.length > 0) {
+    const idCoffee = coffeeOnTheCart[coffeeOnTheCart.length -1].id
+    const amountCoffee = coffeeOnTheCart[coffeeOnTheCart.length -1].amount
+    selectCoffeeFromTheList(idCoffee, amountCoffee)
+            
+    // setCoffeesList(preState => [
+    //   ...preState,
+    //   updateCoffeeIsSelected
+    // ])
   }
-
+ 
   return (
     <section className={styles.coffeList}>
       <h2>Nossos Cafés</h2>
       <div className={styles.list}>
-        {COFFEES_LIST.map((coffee) => {
+        {coffeesList.map((coffee) => {
           return (
-            <div key={coffee.id} className={styles.coffeCard}>
-              <img src={coffee.imageURL} alt={coffee.name} />
-              <span className={styles.tags}>{coffee.tags}</span>
-              <h3 className={styles.name}>{coffee.name}</h3>
-              <p className={styles.description}>{coffee.description}</p>
-
-              <div className={styles.buy}>
-                <div className={styles.value}>
-                  R$ <strong>{coffee.value}</strong>
-                </div>
-
-                <div className={styles.buyActions}>
-                  <AmountCoffees coffeeId={coffee.id} amount={coffee.amount} />
-                  <FaShoppingCart
-                    size={28}
-                    className={styles.buyIconButton}
-                    onClick={() => addCoffeeToCart(
-                      coffee.id,
-                      coffee.name,
-                      individualQuantityOfCoffeeInTheOrder,
-                      coffee.value,
-                      coffee.imageURL,
-                    ) }
-                  />
-                </div>
-              </div>
-            </div>
+            <CoffeeCard
+              key={coffee.id}
+              id={coffee.id}
+              name={coffee.name}
+              imageURL={coffee.imageURL}
+              description={coffee.description}
+              amount={coffee.amount}
+              tags={coffee.tags}
+              value={coffee.value}
+              isCoffeeSelected={coffee.isSelected}
+            />
           );
         })}
       </div>

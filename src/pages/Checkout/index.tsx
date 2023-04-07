@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
@@ -10,7 +10,7 @@ import { AmountCoffees } from "../../components/AmountCoffees";
 
 import styles from "./checkout.module.css";
 import { CoffeeContext } from "../../contexts/coffeContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const newOrderFormeValidationSchema = zod.object({
   zipCode: zod.string().min(8, "Informe o CEP."),
