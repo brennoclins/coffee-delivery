@@ -11,9 +11,9 @@ Desenvolver uma aplicação para gerenciar um carrinho de compras de uma cafeter
 
 ## Funcionalidades Extras que eu quero no sistema
 
- - Na pagina Home quando o cliente selecionar a quantidade e clicar no botão do carrinho o CARD muda a imagem e aparece um novo botao "ir para o carrinho"
+ - Na pagina Home quando o cliente selecionar a quantidade e clicar no botão do carrinho o CARD muda de cor e aparece um novo botao "ir para o carrinho"  [OK]
  - Criar um FOOTER
- - Tornar o app responsivo para tamanhos de tela diferente
+ - Tornar o app responsivo para tamanhos de tela diferente  [OK]
  - Quando o cliente sair da tela de SUCCESS para qualquer outra tela deve ser considerado um novo pedido resetando todos os campos para valores iniciais
   - No formulario da tela de CHECKOUT adicionar os campos: nome e whatsapp de quem vai receber o café
  - Assim que o cliente confirmar o pedido além de ir para tela de SUCCESSS o app deve enviar uma mensagem para o whatsapp do cliente com as informações do seu pedido
