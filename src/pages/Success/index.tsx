@@ -1,15 +1,17 @@
 import { BsClock, BsCurrencyDollar } from "react-icons/bs";
-import { BiMap } from "react-icons/bi";
 
 import styles from "./success.module.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CoffeeContext } from "../../contexts/coffeContext";
 
 export function Success() {
-  const { orders } = useContext(CoffeeContext);
+  const { orders, finalizingOrder } = useContext(CoffeeContext);
 
   const customerRequest = orders[orders.length - 1];
-
+  useEffect(() => {
+    finalizingOrder()
+  }, [])
+    
   return (
     <section className={styles.success}>
       <div className={styles.successTitle}>

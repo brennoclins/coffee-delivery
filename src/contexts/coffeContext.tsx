@@ -33,6 +33,9 @@ interface CoffeeContextType {
 
   coffeesList: CoffeListProps[];
   selectCoffeeFromTheList: (id: string, amount: number) => void;
+  finalizingOrder: () => void;
+  orderIsFinished: boolean;
+  newOrder: () => void;
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType);
@@ -103,10 +106,9 @@ export function CoffeeContextProvider({
   const [totalValueOfItemsInCart, setTotalValueOfItemsInCart] = useState(0); // valor unitario * quantidade
   const [deliveryValue, setDeliveryValue] = useState(3.5); //valor da entrega
   const [individualQuantityOfCoffeeInTheOrder, setIndividualQuantityOfCoffeeInTheOrder] = useState(0)
-  
   const [orders, setOders] = useState<Order[]>([]);
-
   const [coffeesList, setCoffeesList] = useState(COFFEES_LIST);
+  const [orderIsFinished, setOrderIsFinished] = useState(false)
   
   function selectCoffeeFromTheList(id: string, amount: number) {
     coffeesList.filter(coffee => {
@@ -133,6 +135,15 @@ export function CoffeeContextProvider({
         coffee.amount = 0
       }
       return coffee.id == id
+    })
+  }
+
+  function desselectAllCoffeeFromList() {
+    coffeesList.filter(coffee => {
+      coffee.isSelected = false
+      coffee.amount = 0
+    
+      return coffee
     })
   }
 
@@ -260,6 +271,21 @@ export function CoffeeContextProvider({
     setOders((preOrder) => [...preOrder, newOrder]);    
   }
 
+  function finalizingOrder() {
+    setOrderIsFinished(true)
+  }
+
+  function newOrder() {
+    setCoffeeOnTheCart([])
+    setTotalValueOfItemsInCart(0)
+    setIndividualQuantityOfCoffeeInTheOrder(0)
+    setOders([])
+    setOrderIsFinished(false)
+    setTotalValueOfItemsInCart(0)
+
+    desselectAllCoffeeFromList()
+    
+  }
  
   return (
     <CoffeeContext.Provider
@@ -275,6 +301,9 @@ export function CoffeeContextProvider({
         orders,
         coffeesList,
         selectCoffeeFromTheList,
+        finalizingOrder,
+        orderIsFinished,
+        newOrder,
       }}
     >
       {children}

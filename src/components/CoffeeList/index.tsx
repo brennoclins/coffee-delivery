@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CoffeeContext } from "../../contexts/coffeContext";
 
 import { CoffeeCard } from "./CoffeeCard";
@@ -6,9 +6,15 @@ import { CoffeeCard } from "./CoffeeCard";
 import styles from "./coffeeList.module.css";
 
 export function CoffeeList() {
-  const { coffeeOnTheCart, coffeesList, selectCoffeeFromTheList } = useContext(CoffeeContext);
+  const { coffeeOnTheCart, coffeesList, selectCoffeeFromTheList, orderIsFinished, newOrder } = useContext(CoffeeContext);
  
-  if (coffeeOnTheCart.length > 0) {
+  useEffect(() => {
+    if (orderIsFinished) {
+      newOrder()
+    }
+  },[])
+
+  if (!orderIsFinished && coffeeOnTheCart.length > 0) {
     const idCoffee = coffeeOnTheCart[coffeeOnTheCart.length -1].id
     const amountCoffee = coffeeOnTheCart[coffeeOnTheCart.length -1].amount
     selectCoffeeFromTheList(idCoffee, amountCoffee)

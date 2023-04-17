@@ -33,7 +33,7 @@ const newOrderFormeValidationSchema = zod.object({
 type NewOrderFormData = zod.infer<typeof newOrderFormeValidationSchema>;
 
 export function Checkout() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { register, handleSubmit, watch, reset } = useForm({
     resolver: zodResolver(newOrderFormeValidationSchema),
     defaultValues: {
@@ -62,7 +62,7 @@ export function Checkout() {
     deliveryValue,
     createNewOrder,
   } = useContext(CoffeeContext);
- 
+
   function removerCoffeeToCart(id: string) {
     removeCoffeeFromCart(id);
   }
@@ -76,13 +76,21 @@ export function Checkout() {
     state,
     observation,
     formOfPayment,
-  }: NewOrderFormData) {   
-       
-    createNewOrder({ zipCode, publicPlace, number, district, city, state, observation, formOfPayment })
-    // reset(); 
-    navigate("/success")
+  }: NewOrderFormData) {
+    createNewOrder({
+      zipCode,
+      publicPlace,
+      number,
+      district,
+      city,
+      state,
+      observation,
+      formOfPayment,
+    });
+    // reset();
+    navigate("/success");
   }
-  
+
   const filledZipCode = watch("zipCode");
   const isSubmitDisabled = !filledZipCode;
 
@@ -115,41 +123,39 @@ export function Checkout() {
 
               <div>
                 <input
-                  className="w-2/12"
+                  className="md:w-2/12"
                   type="text"
                   placeholder="Número"
                   {...register("number")}
                 />
                 <input
-                  className="w-5/12"
+                  className="md:w-5/12"
                   type="text"
                   placeholder="Bairro"
                   {...register("district")}
                 />
                 <input
-                  className="w-5/12"
+                  className="md:w-5/12"
                   type="text"
                   placeholder="Cidade"
                   {...register("city")}
                 />
                 <input
-                  className="w-1/12"
+                  className="md:w-1/12"
                   type="text"
                   defaultValue={"PE"}
                   placeholder="UF"
                   {...register("state")}
                 />
               </div>
-
-              <div className={styles.addressOBS}>
-                <h2>Observações do cliente</h2>
-                <textarea
-                  className="w-full"
-                  rows={5}
-                  placeholder="Observações, ponto de referencia, informações para o momento da entrega, etc."
-                  {...register("observation")}
-                ></textarea>
-              </div>
+  
+              <h2 className="mt-2">Observações do cliente</h2>
+              <textarea
+                className="w-full"
+                rows={5}
+                placeholder="Observações, ponto de referencia, informações para o momento da entrega, etc."
+                {...register("observation")}
+              ></textarea>
             </div>
           </div>
 
@@ -247,13 +253,13 @@ export function Checkout() {
               </strong>
             </div>
 
-              <button
-                className={styles.paymentDetailsSubmitButton}
-                disabled={isSubmitDisabled}
-                type="submit"
-              >
-                CONFIRMAR PEDIDO
-              </button>
+            <button
+              className={styles.paymentDetailsSubmitButton}
+              disabled={isSubmitDisabled}
+              type="submit"
+            >
+              CONFIRMAR PEDIDO
+            </button>
           </div>
         </section>
       </form>

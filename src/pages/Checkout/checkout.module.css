@@ -69,14 +69,10 @@
 .addressInputs div {
   @apply
   flex
-  gap-2
-}
-
-.addressOBS {
-  @apply
-  flex
   flex-col
   gap-2
+
+  md:flex-row
 }
 
 .cardPayment {
