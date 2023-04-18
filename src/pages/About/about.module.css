@@ -1,0 +1,52 @@
+.about {
+  @apply
+  my-8
+  p-2
+  flex
+  flex-col
+}
+
+.aboutTitle {
+  @apply
+  text-3xl
+  text-purple-800
+  font-medium
+}
+
+.aboutDescription,
+.aboutTechs  {
+  @apply
+  p-4
+  flex
+  flex-col
+}
+
+.aboutDescriptionList,
+.aboutTechsList {
+  @apply
+  m-4
+
+  flex
+  flex-col
+  justify-center
+  gap-2
+
+  list-disc
+  list-inside
+}
+
+.aboutTechsTitle {
+  @apply
+  text-xl
+  text-purple-800
+  font-medium
+}
+
+.aboutTechsList li a {
+  @apply
+  hover:text-purple-700
+  hover:font-medium
+  border-b-2
+  border-transparent
+  hover:border-purple-500
+}

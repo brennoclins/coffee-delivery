@@ -1,0 +1,50 @@
+.footer {
+  @apply
+  my-8
+  pt-4
+  p-2
+
+  flex
+  justify-between
+  items-center
+
+  border-t-2
+}
+
+.footer img {
+  @apply
+  w-3/12
+  rounded-full
+  -scale-x-100
+}
+
+.footer a {
+  @apply
+  flex
+  hover:scale-105
+ 
+  transition-all
+}
+
+nav {
+  @apply
+  flex
+  flex-col
+  items-end
+  gap-1 
+  
+  lg:flex-row
+  lg:justify-between
+  lg:w-3/12
+}
+
+nav a {
+  @apply
+  border-b-2
+  border-transparent
+
+  hover:scale-110
+  hover:border-purple-500
+
+  transition-all
+}

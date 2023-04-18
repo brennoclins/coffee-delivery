@@ -95,7 +95,7 @@ export function Checkout() {
   const isSubmitDisabled = !filledZipCode;
 
   return (
-    <main className={styles.checkout}>
+    <section className={styles.checkout}>
       <form
         className={styles.checkoutForm}
         onSubmit={handleSubmit(handleCreateNewOrder)}
@@ -263,6 +263,6 @@ export function Checkout() {
           </div>
         </section>
       </form>
-    </main>
+    </section>
   );
 }
