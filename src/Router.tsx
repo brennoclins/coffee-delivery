@@ -15,7 +15,7 @@ export function Router() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/contact" element={<Contact />} /> */}
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

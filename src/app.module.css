@@ -1,12 +1,17 @@
 .main {
   @apply
+  w-screen 
+
   flex 
   flex-col 
+  justify-center
   items-center
+  
+  overflow-hidden
 }
 
 .container {
   @apply
-  /* w-5/6  */
-  p-4
+  w-11/12
+  m-4
 }

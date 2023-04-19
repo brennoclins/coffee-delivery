@@ -1,0 +1,46 @@
+.notFound {
+  @apply  
+  w-full
+
+  flex
+  flex-col
+  justify-center
+  items-center
+
+  /* bg-[url(/notfound.jpg)]
+  bg-no-repeat
+  bg-cover */
+}
+
+.notFoundImage{
+  @apply
+  w-1/2
+  flex
+  justify-center
+}
+
+.notFoundTitle {
+  @apply
+  text-4xl
+  text-center
+
+  text-purple-700
+}
+
+.notFoundButton {
+  @apply
+  my-8
+  p-4
+  w-2/3
+  text-center
+  text-white
+  bg-purple-600
+  
+  border-2
+  border-purple-700
+  rounded-md
+
+  hover:brightness-110
+  active:text-purple-700
+  active:bg-white
+}
