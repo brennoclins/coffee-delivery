@@ -31,3 +31,8 @@ Desenvolver uma aplicação para gerenciar um carrinho de compras de uma cafeter
 ## Lauout app
 
 [Lauyout do app](https://www.figma.com/file/5yT9ZzZmRQRS4yivGGB3pl/Coffee-Delivery/duplicate)
+
+### Comando pra criar GIF das telas
+```
+convert  -delay 180 -loop 0 *.png coffeeDelivery_by_Brenno_DevMeditation.gif
+```

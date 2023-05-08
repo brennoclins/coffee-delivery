@@ -17,7 +17,7 @@ export function About() {
           <li>Adicionar uma quantidade específicas de itens no carrinho</li>
           <li>Aumentar ou remover a quantidade de itens no carrinho</li>
           <li>Formulário para cadastrar endereço de entrega</li>
-          <li>Ao finalizar compra, exibe uma tela de sucesso com detales da compra</li>
+          <li>Ao finalizar compra, exibe uma tela de sucesso com detalhes da compra</li>
         </ul>
       </div>
 
