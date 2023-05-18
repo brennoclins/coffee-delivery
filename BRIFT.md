@@ -16,6 +16,7 @@ Desenvolver uma aplicação para gerenciar um carrinho de compras de uma cafeter
  - [OK] Assim que o cliente confirmar o pedido ir para tela de SUCCESSS o app deve apresentar as informações do pedido.
  - [OK] Quando o cliente sair da tela de SUCCESS, deve ser considerado um novo pedido resetando todos os campos para valores iniciais.
  - Criar um FOOTER
+ - [OK] Formatar valores dos cafés
  
 
 ## Conceitos do ReactJS usados

@@ -11,6 +11,7 @@ import { AmountCoffees } from "../../components/AmountCoffees";
 import styles from "./checkout.module.css";
 import { CoffeeContext } from "../../contexts/coffeContext";
 import { useNavigate } from "react-router-dom";
+import { priceFormatter } from "../../utils/formatter";
 
 const newOrderFormeValidationSchema = zod.object({
   zipCode: zod.string().min(8, "Informe o CEP."),
@@ -227,7 +228,7 @@ export function Checkout() {
                     </div>
                   </div>
 
-                  <strong>R$ {String(coffee.value)}</strong>
+                  <strong>{priceFormatter.format(coffee.value)}</strong>
                 </div>
               </section>
             );
@@ -235,20 +236,19 @@ export function Checkout() {
 
           <div className={styles.paymentDetails}>
             <div>
-              Total de itens <span>R$ {totalValueOfItemsInCart}</span>
+              Total de itens <span>{priceFormatter.format(totalValueOfItemsInCart)}</span>
             </div>
 
             <div>
               Entrega{" "}
-              <span>R$ {totalValueOfItemsInCart > 0 ? deliveryValue : 0}</span>
+              <span>{totalValueOfItemsInCart > 0 ? priceFormatter.format(deliveryValue) : 0}</span>
             </div>
 
             <div className={styles.paymentTotal}>
               <strong>TOTAL</strong>
               <strong>
-                R${" "}
                 {totalValueOfItemsInCart > 0
-                  ? totalValueOfItemsInCart + deliveryValue
+                  ? priceFormatter.format(totalValueOfItemsInCart + deliveryValue)
                   : 0}
               </strong>
             </div>

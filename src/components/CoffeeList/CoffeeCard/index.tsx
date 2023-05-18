@@ -6,6 +6,7 @@ import { CoffeeContext } from "../../../contexts/coffeContext";
 
 import styles from "./coffeeCard.module.css";
 import { Link } from "react-router-dom";
+import { priceFormatter } from "../../../utils/formatter";
 
 type CoffeCardProps = {
   imageURL: string;
@@ -89,7 +90,7 @@ export function CoffeeCard({
 
       <div className={styles.buy}>
         <div className={styles.value}>
-          R$ <strong>{value}</strong>
+          <strong>{priceFormatter.format(value)}</strong>
         </div>
 
         <div className={styles.buyActions}>

@@ -69,7 +69,7 @@
 
 .value strong {
   @apply
-  text-2xl
+  text-xl
   text-black
 }
 

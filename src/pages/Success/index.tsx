@@ -3,6 +3,7 @@ import { BsClock, BsCurrencyDollar } from "react-icons/bs";
 import styles from "./success.module.css";
 import { useContext, useEffect } from "react";
 import { CoffeeContext } from "../../contexts/coffeContext";
+import { priceFormatter } from "../../utils/formatter";
 
 export function Success() {
   const { orders, finalizingOrder } = useContext(CoffeeContext);
@@ -85,7 +86,7 @@ export function Success() {
 
           <div  className={styles.orderDetailsTotal}>
             <h4>Valor á ser pago:</h4>
-            <strong>R$ {customerRequest.totalOrder}</strong>
+            <strong>{priceFormatter.format(customerRequest.totalOrder)}</strong>
           </div>
         </div>
       </section>
